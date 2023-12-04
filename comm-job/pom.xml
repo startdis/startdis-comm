@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>comm-job</artifactId>
+    <version>${startdis.version}</version>
+    <name>comm-job</name>
+    <packaging>jar</packaging>
+    <description>comm-job</description>
+
+    <parent>
+        <groupId>com.startdis.comm</groupId>
+        <artifactId>startdis-comm</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <name>release</name>
+            <url>https://nexus.njydsz.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>snapshot</name>
+            <url>https://nexus.njydsz.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <!--comm-core-->
+        <dependency>
+            <groupId>com.startdis.comm</groupId>
+            <artifactId>comm-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- xxl-job 核心包-->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

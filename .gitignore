@@ -1,6 +1,18 @@
 node_modules
 .DS_Store
 dist
+wos-dist
+sys-dist
+srs-dist
+sso-dist
+pms-dist
+bpm-dist
+wos-dist.zip
+sys-dist.zip
+srs-dist.zip
+sso-dist.zip
+pms-dist.zip
+bpm-dist.zip
 .npmrc
 .cache
 
@@ -21,7 +33,7 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
-.vscode
+# .vscode
 *.suo
 *.ntvs*
 *.njsproj
@@ -34,4 +46,3 @@ pnpm-lock.yaml
 .history
 
 !**/form-making/dist/
-

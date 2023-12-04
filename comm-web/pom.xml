@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>comm-web</artifactId>
+    <version>${startdis.version}</version>
+    <name>comm-web</name>
+    <packaging>jar</packaging>
+    <description>comm-web</description>
+
+    <parent>
+        <groupId>com.startdis.comm</groupId>
+        <artifactId>startdis-comm</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <name>release</name>
+            <url>https://nexus.njydsz.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>snapshot</name>
+            <url>https://nexus.njydsz.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <!-- common-core -->
+        <dependency>
+            <groupId>com.startdis.comm</groupId>
+            <artifactId>comm-core</artifactId>
+        </dependency>
+        <!-- common-util -->
+        <dependency>
+            <groupId>com.startdis.comm</groupId>
+            <artifactId>comm-util</artifactId>
+        </dependency>
+        <!--common-jdbc-->
+        <!--<dependency>-->
+        <!--    <groupId>com.startdis.comm</groupId>-->
+        <!--    <artifactId>comm-jdbc</artifactId>-->
+        <!--</dependency>-->
+        <!--common-redis-->
+        <!--<dependency>-->
+        <!--    <groupId>com.startdis.comm</groupId>-->
+        <!--    <artifactId>comm-redis</artifactId>-->
+        <!--</dependency>-->
+        <!--common-swagger-->
+        <dependency>
+            <groupId>com.startdis.comm</groupId>
+            <artifactId>comm-swagger</artifactId>
+        </dependency>
+        <!--spring-web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--skywalking-trace-->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
