@@ -4,7 +4,7 @@ import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson2.JSON;
 import com.startdis.comm.core.constant.Constants;
 import com.startdis.comm.domain.bean.ResultBean;
-import com.startdis.comm.util.string.StringKits;
+import com.startdis.comm.util.string.StringUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -114,8 +114,8 @@ public class ServletUtils {
 
     public static String getHeader(HttpServletRequest request, String name) {
         String value = request.getHeader(name);
-        if (StringKits.isEmpty(value)) {
-            return StringKits.EMPTY;
+        if (StringUtils.isEmpty(value)) {
+            return StringUtils.EMPTY;
         }
         return urlDecode(value);
     }
@@ -167,12 +167,12 @@ public class ServletUtils {
         }
 
         String uri = request.getRequestURI();
-        if (StringKits.inStringIgnoreCase(uri, ".json", ".xml")) {
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
             return true;
         }
 
         String ajax = request.getParameter("__ajax");
-        return StringKits.inStringIgnoreCase(ajax, "json", "xml");
+        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
     }
 
     /**
@@ -185,7 +185,7 @@ public class ServletUtils {
         try {
             return URLEncoder.encode(str, Constants.UTF8);
         } catch (UnsupportedEncodingException e) {
-            return StringKits.EMPTY;
+            return StringUtils.EMPTY;
         }
     }
 
@@ -199,7 +199,7 @@ public class ServletUtils {
         try {
             return URLDecoder.decode(str, Constants.UTF8);
         } catch (UnsupportedEncodingException e) {
-            return StringKits.EMPTY;
+            return StringUtils.EMPTY;
         }
     }
 

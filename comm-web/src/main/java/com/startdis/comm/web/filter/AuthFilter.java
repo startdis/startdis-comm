@@ -8,7 +8,7 @@ import com.startdis.comm.core.constant.HeaderConstant;
 import com.startdis.comm.core.enums.ServiceTypeEnum;
 import com.startdis.comm.util.auth.AuthInfo;
 import com.startdis.comm.util.auth.RequestHolder;
-import com.startdis.comm.util.url.UrlIgnoreUtil;
+import com.startdis.comm.util.url.UrlIgnoreUtils;
 import com.startdis.comm.web.auth.AuthHandler;
 import com.startdis.comm.web.auth.AuthHandlerFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,7 @@ public class AuthFilter implements Filter {
         List<String> customIgnoreUrl = authFilterConfig.getCustomIgnoreUrl();
         ignoreUrl.addAll(commonIgnoreUrl);
         ignoreUrl.addAll(customIgnoreUrl);
-        boolean ignoredUrl = UrlIgnoreUtil.isIgnoreUrl(ignoreUrl, servletPath);
+        boolean ignoredUrl = UrlIgnoreUtils.isIgnoreUrl(ignoreUrl, servletPath);
         if (ignoredUrl) {
             filterChain.doFilter(request, servletResponse);
             return;

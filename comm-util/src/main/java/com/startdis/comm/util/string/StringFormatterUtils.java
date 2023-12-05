@@ -1,11 +1,14 @@
 package com.startdis.comm.util.string;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 字符串格式化
  *
  * @author startdis
  */
-public class StringFormatter {
+public class StringFormatterUtils {
     public static final String EMPTY_JSON = "{}";
     public static final char C_BACKSLASH = '\\';
     public static final char C_DELIM_START = '{';
@@ -25,7 +28,7 @@ public class StringFormatter {
      * @return 结果
      */
     public static String format(final String strPattern, final Object... argArray) {
-        if (StringKits.isEmpty(strPattern) || StringKits.isEmpty(argArray)) {
+        if (StringUtils.isEmpty(strPattern) || ObjectUtils.isEmpty(argArray)) {
             return strPattern;
         }
         final int strPatternLength = strPattern.length();
@@ -49,7 +52,7 @@ public class StringFormatter {
                     if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == C_BACKSLASH) {
                         // 转义符之前还有一个转义符，占位符依旧有效
                         sbuf.append(strPattern, handledPosition, delimIndex - 1);
-                        sbuf.append(StringConvert.utf8Str(argArray[argIndex]));
+                        sbuf.append(StringConvertUtils.utf8Str(argArray[argIndex]));
                         handledPosition = delimIndex + 2;
                     } else {
                         // 占位符被转义
@@ -61,7 +64,7 @@ public class StringFormatter {
                 } else {
                     // 正常占位符
                     sbuf.append(strPattern, handledPosition, delimIndex);
-                    sbuf.append(StringConvert.utf8Str(argArray[argIndex]));
+                    sbuf.append(StringConvertUtils.utf8Str(argArray[argIndex]));
                     handledPosition = delimIndex + 2;
                 }
             }

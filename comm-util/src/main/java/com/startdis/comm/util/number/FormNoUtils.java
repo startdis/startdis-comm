@@ -8,9 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 /**
- * 单号生成工具类
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc FormNoUtils 单号生成工具类
  */
-public class FormNoUtil {
+public class FormNoUtils {
     /**
      * 生成单号前缀
      */

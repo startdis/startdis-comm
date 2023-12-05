@@ -1,7 +1,7 @@
 package com.startdis.comm.util.file;
 
-import com.startdis.comm.util.string.StringKits;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +13,9 @@ import java.text.DecimalFormat;
 /**
  * @author Startdis
  * @email startdis@dianjiu.cc
- * @desc FileKits
+ * @desc FileUtils
  */
-public class FileKits {
+public class FileUtils {
     /**
      * 字符常量：斜杠 {@code '/'}
      */
@@ -103,12 +103,12 @@ public class FileKits {
      */
     public static boolean checkAllowDownload(String resource) {
         // 禁止目录上跳级别
-        if (StringKits.contains(resource, "..")) {
+        if (StringUtils.contains(resource, "..")) {
             return false;
         }
 
         // 检查允许下载的文件规则
-        if (ArrayUtils.contains(MediaType.DEFAULT_ALLOWED_EXTENSION, FileTypeKits.getFileType(resource))) {
+        if (ArrayUtils.contains(MediaType.DEFAULT_ALLOWED_EXTENSION, FileTypeUtils.getFileType(resource))) {
             return true;
         }
 

@@ -7,12 +7,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.*;
 
 /**
- * @author DianJiu
- * @email lidianjiu@njydsz.com
- * @date 2022-07-26
- * @desc
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc JwtUtils
  */
-public class JwtKits {
+public class JwtUtils {
     /**
      * 设置过期时间及密匙
      * CALENDAR_FIELD 时间单位
@@ -65,10 +64,7 @@ public class JwtKits {
         try {
             verifier = JWT.require(algorithm).build().verify(token);
         } catch (Exception e) {
-            //JSONObject jsonObject = new JSONObject();
-            //jsonObject.put("status", "401");
-            //jsonObject.put("msg", "验证失败，请重新登录!");
-            // TODO: 处理验证异常
+            throw new RuntimeException(e);
         }
         assert verifier != null;
         return verifier.getClaim("userInfo").asMap();
@@ -80,14 +76,14 @@ public class JwtKits {
          */
         HashMap<String, Object> map = new HashMap<>();
         String uuid = String.valueOf(UUID.randomUUID()).replace("-", "");
-        System.out.println(uuid);
+        System.out.println("加密前："+uuid);
         map.put("uuid", uuid);
         String token = encrypt(map);
-        System.out.println(token);
+        System.out.println("加密后："+token);
         /**
          * 测试解密
          */
         Map<String, Object> objectMap = decrypt(token);
-        System.out.println(objectMap.get("uuid"));
+        System.out.println("解密后："+objectMap.get("uuid"));
     }
 }

@@ -2,6 +2,11 @@ package com.startdis.comm.util.merge;
 
 import java.util.List;
 
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc MergeUtils
+ */
 public class MergeUtils {
     /**
      *

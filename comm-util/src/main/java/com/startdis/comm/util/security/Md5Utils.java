@@ -3,12 +3,11 @@ package com.startdis.comm.util.security;
 import java.security.MessageDigest;
 
 /**
- * @author DianJiu
- * @email lidianjiu@njydsz.com
- * @date 2022-07-26
- * @desc
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc Md5Utils
  */
-public class Md5Kits {
+public class Md5Utils {
     /**
      * 将给定的字符串MD5加密
      *

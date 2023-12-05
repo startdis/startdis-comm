@@ -15,8 +15,8 @@ import java.security.SecureRandom;
  * 注意:DES加密和解密过程中，密钥长度都必须是8的倍数
  */
 
-public class DesKits {
-    public DesKits() {
+public class DesUtils {
+    public DesUtils() {
     }
 
     // 测试
@@ -28,9 +28,9 @@ public class DesKits {
 
         byte[] result;
         try {
-            result = DesKits.encrypt(str.getBytes(), password);
+            result = DesUtils.encrypt(str.getBytes(), password);
             System.out.println("加密后: " + result);
-            byte[] decryResult = DesKits.decrypt(result, password);
+            byte[] decryResult = DesUtils.decrypt(result, password);
             System.out.println("解密后: " + new String(decryResult));
         } catch (UnsupportedEncodingException e2) {
             // TODO Auto-generated catch block

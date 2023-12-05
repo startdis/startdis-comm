@@ -12,18 +12,18 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author DianJiu
- * @email lidianjiu@njydsz.com
+ * @author Startdis
+ * @email startdis@dianjiu.cc
  * @date 2022-07-26
- * @desc AES 加/解密工具类
+ * @desc AesUtils 加/解密工具类
  * 使用密钥时请使用 initKey() 方法来生成随机密钥
  * initKey 方法内部使用 java.crypto.KeyGenerator 密钥生成器来生成特定于 AES 算法参数集的随机密钥
  * 使用密钥生成器生成的密钥能保证更强的随机性
  * 生成的二进制密钥建议使用 Hex 进行编码
  */
-public class AesKits {
+public class AesUtils {
 
-    private AesKits() {
+    private AesUtils() {
     }
 
     /**
@@ -238,7 +238,7 @@ public class AesKits {
 
 
         // 使用密钥生成器 KeyGenerator 生成的 16 字节随机密钥的 hex 字符串，使用时解 hex 得到二进制密钥
-        byte[] bytes = AesKits.initKey();
+        byte[] bytes = AesUtils.initKey();
         String aesKey = Hex.encodeHexString(bytes);
         //String aesKey = "d86d7bab3d6ac01ad9dc6a897652f2d2";
         System.out.println("\n当前密钥为" + aesKey);

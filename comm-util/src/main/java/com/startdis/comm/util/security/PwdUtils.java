@@ -1,12 +1,13 @@
 package com.startdis.comm.util.security;
 
-import org.springframework.util.DigestUtils;
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc PwdUtils 用户密码工具类
+ */
+public class PwdUtils {
 
-import java.nio.charset.StandardCharsets;
-
-public class PwdKits {
-
-//    private final static String DEFAULT_PASS="Tdcd123456";
+    //private final static String DEFAULT_PASS="Startdis2022";
 
     private final static String DEFAULT_PASS="123456";
 
@@ -17,7 +18,7 @@ public class PwdKits {
 
 
     public static String encode(String s){
-        return DigestUtils.md5DigestAsHex(s.getBytes(StandardCharsets.UTF_8));
+        return Md5Utils.encode(s);
     }
 
     public static String getDefaultPassEncryption(){
@@ -26,6 +27,6 @@ public class PwdKits {
 
     public static void main(String[] args) {
         System.out.println(getDefaultPassEncryption());
-        //System.out.println(encode("111111"));
+        System.out.println(Md5Utils.encode(DEFAULT_PASS));
     }
 }

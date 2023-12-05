@@ -2,6 +2,11 @@ package com.startdis.comm.util.id;
 
 import com.startdis.comm.util.hash.HashUtils;
 
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc SnowflakeIDUtils
+ */
 public class SnowflakeIDUtils {
     private static final SnowflakeIDUtils intance = new SnowflakeIDUtils(1, 1, 1);
 

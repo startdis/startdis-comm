@@ -1,18 +1,17 @@
 package com.startdis.comm.util.ip;
 
-import com.startdis.comm.util.string.StringKits;
+import com.startdis.comm.util.string.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * 获取IP方法
- * 
- * @author startdis
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc IpUtils
  */
-public class IpUtils
-{
+public class IpUtils {
     /**
      * 获取客户端IP
      * 
@@ -71,7 +70,7 @@ public class IpUtils
      */
     private static boolean internalIp(byte[] addr)
     {
-        if (StringKits.isNull(addr) || addr.length < 2)
+        if (StringUtils.isNull(addr) || addr.length < 2)
         {
             return true;
         }
@@ -260,6 +259,6 @@ public class IpUtils
      */
     public static boolean isUnknown(String checkString)
     {
-        return StringKits.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
+        return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
     }
 }

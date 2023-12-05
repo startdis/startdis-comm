@@ -10,7 +10,7 @@ import java.util.Set;
  * @email startdis@dianjiu.cc
  * @desc 请求路径忽略工具类
  */
-public class UrlIgnoreUtil {
+public class UrlIgnoreUtils {
 
     private static final AntPathMatcher matcher = new AntPathMatcher();
 

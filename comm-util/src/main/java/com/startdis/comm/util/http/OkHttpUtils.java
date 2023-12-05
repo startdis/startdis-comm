@@ -21,8 +21,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Description: OKHttp3工具类
- * Created by dianjiu on 2020/10/29 9:22
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc OkHttpUtils
  */
 @Component
 public class OkHttpUtils {

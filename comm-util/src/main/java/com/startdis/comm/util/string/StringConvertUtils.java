@@ -1,5 +1,7 @@
 package com.startdis.comm.util.string;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -12,7 +14,7 @@ import java.util.Set;
  *
  * @author startdis
  */
-public class StringConvert {
+public class StringConvertUtils {
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>
@@ -62,7 +64,7 @@ public class StringConvert {
         }
 
         final String valueStr = toStr(value, null);
-        return StringKits.isEmpty(valueStr) ? defaultValue : valueStr.charAt(0);
+        return StringUtils.isEmpty(valueStr) ? defaultValue : valueStr.charAt(0);
     }
 
     /**
@@ -97,7 +99,7 @@ public class StringConvert {
             return ((Number) value).byteValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -139,7 +141,7 @@ public class StringConvert {
             return ((Number) value).shortValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -178,7 +180,7 @@ public class StringConvert {
             return (Number) value;
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -220,7 +222,7 @@ public class StringConvert {
             return ((Number) value).intValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -270,7 +272,7 @@ public class StringConvert {
      * @return 结果
      */
     public static Integer[] toIntArray(String split, String str) {
-        if (StringKits.isEmpty(str)) {
+        if (StringUtils.isEmpty(str)) {
             return new Integer[]{};
         }
         String[] arr = str.split(split);
@@ -290,7 +292,7 @@ public class StringConvert {
      * @return 结果
      */
     public static Long[] toLongArray(String split, String str) {
-        if (StringKits.isEmpty(str)) {
+        if (StringUtils.isEmpty(str)) {
             return new Long[]{};
         }
         String[] arr = str.split(split);
@@ -343,7 +345,7 @@ public class StringConvert {
             return ((Number) value).longValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -386,7 +388,7 @@ public class StringConvert {
             return ((Number) value).doubleValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -429,7 +431,7 @@ public class StringConvert {
             return ((Number) value).floatValue();
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -468,7 +470,7 @@ public class StringConvert {
             return (Boolean) value;
         }
         String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         valueStr = valueStr.trim().toLowerCase();
@@ -518,7 +520,7 @@ public class StringConvert {
             return myE;
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -560,7 +562,7 @@ public class StringConvert {
             return BigInteger.valueOf((Long) value);
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -608,7 +610,7 @@ public class StringConvert {
             return new BigDecimal((Integer) value);
         }
         final String valueStr = toStr(value, null);
-        if (StringKits.isEmpty(valueStr)) {
+        if (StringUtils.isEmpty(valueStr)) {
             return defaultValue;
         }
         try {
@@ -638,7 +640,7 @@ public class StringConvert {
      * @return 字符串
      */
     public static String utf8Str(Object obj) {
-        return str(obj, CharsetKit.CHARSET_UTF_8);
+        return str(obj, CharsetUtils.CHARSET_UTF_8);
     }
 
     /**
@@ -694,7 +696,7 @@ public class StringConvert {
      * @return 字符串
      */
     public static String str(byte[] bytes, String charset) {
-        return str(bytes, StringKits.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset));
+        return str(bytes, StringUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset));
     }
 
     /**

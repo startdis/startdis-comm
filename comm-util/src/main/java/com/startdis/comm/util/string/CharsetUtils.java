@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
  *
  * @author startdis
  */
-public class CharsetKit {
+public class CharsetUtils {
     /**
      * ISO-8859-1
      */
@@ -42,7 +42,7 @@ public class CharsetKit {
      * @return Charset
      */
     public static Charset charset(String charset) {
-        return StringKits.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset);
+        return StringUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset);
     }
 
     /**
@@ -74,7 +74,7 @@ public class CharsetKit {
             destCharset = StandardCharsets.UTF_8;
         }
 
-        if (StringKits.isEmpty(source) || srcCharset.equals(destCharset)) {
+        if (StringUtils.isEmpty(source) || srcCharset.equals(destCharset)) {
             return source;
         }
         return new String(source.getBytes(srcCharset), destCharset);

@@ -6,7 +6,7 @@ import com.startdis.comm.core.enums.PermissionScopeEnum;
 import com.startdis.comm.util.auth.AuthInfoUtils;
 import com.startdis.comm.util.http.ServletUtils;
 import com.startdis.comm.util.ip.IpUtils;
-import com.startdis.comm.util.string.StringKits;
+import com.startdis.comm.util.string.StringUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         Map<String, String> headers = ServletUtils.getHeaders(httpServletRequest);
         // 传递用户信息请求头，防止丢失
         //String userId = headers.get(HeaderConstant.X_UNIQUE_ID);
-        if (StringKits.isNotNull(httpServletRequest)) {
+        if (StringUtils.isNotNull(httpServletRequest)) {
             // 传递服务类型请求头，防止丢失
             log.info("FeignHeaderRequestInterceptor X_SERVICE_TYPE:{}", AuthInfoUtils.getServiceTypeCode());
             requestTemplate.header(HeaderConstant.X_SERVICE_TYPE, AuthInfoUtils.getServiceTypeCode());

@@ -1,4 +1,4 @@
-package com.startdis.comm.util.base64;
+package com.startdis.comm.util.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,25 +11,25 @@ import java.util.Base64;
  * @email startdis@dianjiu.cc
  * @desc Base64Kits
  */
-public class Base64Kits {
+public class Base64Utils {
     public static final String CHARSET = "utf-8";
 
-    private static final Logger logger = LoggerFactory.getLogger(Base64Kits.class);
+    private static final Logger logger = LoggerFactory.getLogger(Base64Utils.class);
 
     public static void main(String[] args) throws UnsupportedEncodingException {
         //测试FileBase64
         long start = System.currentTimeMillis();
-        String imgBase64Str = Base64Kits.convertFileToBase64("C:\\demos\\a3fa6ce0-b9a9-4313-93f0-501d1149596c.jpg");
+        String imgBase64Str = Base64Utils.convertFileToBase64("C:\\demos\\a3fa6ce0-b9a9-4313-93f0-501d1149596c.jpg");
         System.out.println("本地图片转换Base64:" + imgBase64Str);
         System.out.println("Base64字符串length=" + imgBase64Str.length());
-        Base64Kits.convertBase64ToFile(imgBase64Str, "C:\\demos\\", "test.jpg");
+        Base64Utils.convertBase64ToFile(imgBase64Str, "C:\\demos\\", "test.jpg");
         System.out.println("duration:" + (System.currentTimeMillis() - start));
         //测试StringBase64
         start = System.currentTimeMillis();
-        String base64Str = Base64Kits.encode("123456");
+        String base64Str = Base64Utils.encode("123456");
         System.out.println("字符串加密后的Base64为:" + base64Str);
         System.out.println("Base64字符串length=" + base64Str.length());
-        String decode = Base64Kits.decode(base64Str);
+        String decode = Base64Utils.decode(base64Str);
         System.out.println("Base64解密后的字符串为:"+decode);
         System.out.println("duration:" + (System.currentTimeMillis() - start));
 

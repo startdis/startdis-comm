@@ -4,7 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 import com.startdis.comm.core.constant.FilterIgnoreConstant;
 import com.startdis.comm.util.auth.TenantHolder;
-import com.startdis.comm.util.url.UrlIgnoreUtil;
+import com.startdis.comm.util.url.UrlIgnoreUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class TenantInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String servletPath = request.getServletPath();
-        boolean isIgnoreRequest = UrlIgnoreUtil.isIgnoreUrl(ignoreUrlSet, servletPath);
+        boolean isIgnoreRequest = UrlIgnoreUtils.isIgnoreUrl(ignoreUrlSet, servletPath);
         log.info("本次请求多租户拦截器是否拦截:{},请求路径:{}",!isIgnoreRequest,servletPath);
         TenantHolder.setIgnoredRequest(isIgnoreRequest);
         return true;

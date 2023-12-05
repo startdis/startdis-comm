@@ -4,6 +4,11 @@ package com.startdis.comm.util.page;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc PageUtils 分页工具箱
+ */
 public class PageUtils {
     /**
      * 开始分页

@@ -13,7 +13,7 @@ public class Rsa2Demo {
     }
 
     public static void mookHttp(){
-        Rsa2Kits.initRSAKey(2048);
+        Rsa2Utils.initRSAKey(2048);
         // 初始化A公司的公钥、私钥
         String privateKeyA= "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC1YbT3O4Rd2F5d7R/+61clUBvGtpnYYzDsUCmVLCYnE1zCNQawi5ga+cpdgyafOLFJcVGfcHEushXgJ3XFp0mriRCKnBiA0OwoNa0sVZyW46eLsYhxx6aNmcsfk04xUNR52FYRD3gvLpfIXHlW4Zib9FtYJThjXo6kSLrZbh2f9gaYNlJzJn8tWljI3sPgzgvvVCtPbwFOW5D7Pt7n/nsL3AUM5ZqItRBvlkejitbdjYlg2WXJA6pDYtAxO9+iwiDsftQqF8QzXiZDTBEr+jqKPk3ZpYpuE8nXSWpx/1c4ujhI6R+/CVvj4PEccfDs9x2dusVLgVdYgXxFY4jyyFhrAgMBAAECggEBAJdxCAaw89jjMg9cUC2o0289DqQAjD1GvG9ikwWRAh34JaelXHuFYi+LxjIDsfiY/jVi3xKvcGDbojYw3D12aqVFYMFKiY7sYXFFN9zfcknttFOHnHPbja2G7jjj5hJ4+Z7uSRYfg2ppjaNlyo4G+EOmZ6oWEZmuNozmiNPIBAYsmNXmxK7jmFKsMr8dN8oTraP2j5rjpWwvcoqoJKacGLY8dV8/miGlaTyJzrJT/JRbvPl1pCe9W5MMv2XhwaIrpM2kPuO1HQjBLgsFXQyYxAP0BvqID7QX+MYK104VcpuuAARLqZZUwEZP2quJUMxT973KUlLkBUdgfrLoElvNXOECgYEA/1x4botRAudqjaWH4UTAqaCy0/WrWluZqGxaZn/aS3BdFYya/zMH8kY6s16yKZ5qErxNamQWrGElpHHR8dz3fqkPp5cjqYRcxztPhtCxwkNO5lPRZPIngD7c4CNN1nKV9rO1+a4ALDZJzOKYZSybwOYWkKfEC9+ZNQz2mk98TNECgYEAtdXcba2ayxb6BypunV8xXgX7e57b7VmwSARJGjGAwJJ+Y9drFTFrn/Ei+Tl6r+lnjB7fDejlzxCKQDtP+ZwEMWKaE+LWiHDMucAC5x77wlaWzLEMSpfBsNp2Sw9PmAoQrteHFKJ6V03jMJR2SB3ihH1uj99+4i6U9svHa+Y0cHsCgYAqSMGYbHFJrdAzDEnnv163t+hkuLVbDPfwr6B4gItBGqYPP20a/PQ/5ekqcm/F/HlMCOo4x8IJYTy+cip1hkVlL9FrytcY5tYGF4gfpscIh+S0twRhVse7sK0aYD4vWGIEq9ViNrHIoGSwDIV3m19fHbp20ZDg9nGEG1VqT+chQQKBgQCukOr2rJUP5jYRDQ52rL3TO0EMlB0lR1ZyPRMFP4MQ3VLTfSrDhNeDDFf8Fc+P9C7BmZ2gV/fQC1v+gDKuOrbXxoaPEtXM1SXmKc1fnyIpl0Fcr5hSQFDl/UVVmBRcrUUI5cc76yQyjobOy6imYXJmqZisLO8+K2Q9brM8BhxP4wKBgQDd0r1LAXXDmfEdtZAz0kfhssWVb2E/w+TSyvSqFsvJh8bCrZ18WgUeiAya47mjXCUqB8dOUTPjtO8HqfUfqI+Qr0agdErt1BvoBD10ntVowbOJrj0RJLfFr8YLrHhGkLPTZzt17upv+l5x+pyMaDPxePXO8jy1Nk3rL2okpHqW6A==";
         String publicKeyA= "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtWG09zuEXdheXe0f/utXJVAbxraZ2GMw7FAplSwmJxNcwjUGsIuYGvnKXYMmnzixSXFRn3BxLrIV4Cd1xadJq4kQipwYgNDsKDWtLFWcluOni7GIccemjZnLH5NOMVDUedhWEQ94Ly6XyFx5VuGYm/RbWCU4Y16OpEi62W4dn/YGmDZScyZ/LVpYyN7D4M4L71QrT28BTluQ+z7e5/57C9wFDOWaiLUQb5ZHo4rW3Y2JYNllyQOqQ2LQMTvfosIg7H7UKhfEM14mQ0wRK/o6ij5N2aWKbhPJ10lqcf9XOLo4SOkfvwlb4+DxHHHw7PcdnbrFS4FXWIF8RWOI8shYawIDAQAB";
@@ -25,6 +25,7 @@ public class Rsa2Demo {
         String resp ="22222222222222";
 
         /**
+         * (公钥加密，私钥解密；私钥签名，公钥验签。)
          * 模拟A公司向B公司发送请求
          * B公司验签后解密请求报文
          * B公司处理完自己的业务后
@@ -36,18 +37,18 @@ public class Rsa2Demo {
         System.out.println("A向B 发送请求开始==========");
         System.out.println("加密前的请求数据为===>"+req);
         //用B公司的公钥加密请求
-        String encryptByPublicKeyB = Rsa2Kits.buildRSAEncryptByPublicKey(req, publicKeyB);
+        String encryptByPublicKeyB = Rsa2Utils.buildRSAEncryptByPublicKey(req, publicKeyB);
         System.out.println("用B公司的公钥加密请求===>"+encryptByPublicKeyB);
         //用A公司的私钥生成签名
-        String reqSignature = Rsa2Kits.buildRSASignByPrivateKey(encryptByPublicKeyB, privateKeyA);
+        String reqSignature = Rsa2Utils.buildRSASignByPrivateKey(encryptByPublicKeyB, privateKeyA);
         System.out.println("用A公司的私钥生成签名===>"+reqSignature);
 
         System.out.println("B收到A的请求开始==========");
         //用A公司的公钥验证签名
-        boolean SignatureBoolByPublicKeyA = Rsa2Kits.buildRSAverifyByPublicKey(encryptByPublicKeyB, publicKeyA, reqSignature);
+        boolean SignatureBoolByPublicKeyA = Rsa2Utils.buildRSAverifyByPublicKey(encryptByPublicKeyB, publicKeyA, reqSignature);
         System.out.println("用A公司的公钥验证签名===>"+SignatureBoolByPublicKeyA);
         //用B公司的私钥解密请求
-        String decryptByPrivateKeyB = Rsa2Kits.buildRSADecryptByPrivateKey(encryptByPublicKeyB, privateKeyB);
+        String decryptByPrivateKeyB = Rsa2Utils.buildRSADecryptByPrivateKey(encryptByPublicKeyB, privateKeyB);
         System.out.println("用B公司的私钥解密请求===>"+decryptByPrivateKeyB);
 
 
@@ -55,18 +56,18 @@ public class Rsa2Demo {
         System.out.println("B发送A的响应开始==========");
         System.out.println("加密前的响应数据为===>"+resp);
         //用A公司的公钥加密响应
-        String encryptByPublicKeyA = Rsa2Kits.buildRSAEncryptByPublicKey(resp, publicKeyA);
+        String encryptByPublicKeyA = Rsa2Utils.buildRSAEncryptByPublicKey(resp, publicKeyA);
         System.out.println("用A公司的公钥加密请求===>"+encryptByPublicKeyA);
         //用B公司的私钥生成签名
-        String respSignature = Rsa2Kits.buildRSASignByPrivateKey(encryptByPublicKeyA, privateKeyB);
+        String respSignature = Rsa2Utils.buildRSASignByPrivateKey(encryptByPublicKeyA, privateKeyB);
         System.out.println("用B公司的私钥生成签名===>"+respSignature);
 
         System.out.println("A收到B的响应开始==========");
         //用B公司的公钥验证签名
-        boolean SignatureBoolByPublicKeyB = Rsa2Kits.buildRSAverifyByPublicKey(encryptByPublicKeyA, publicKeyB, respSignature);
+        boolean SignatureBoolByPublicKeyB = Rsa2Utils.buildRSAverifyByPublicKey(encryptByPublicKeyA, publicKeyB, respSignature);
         System.out.println("用B公司的公钥验证签名===>"+SignatureBoolByPublicKeyB);
         //用A公司的私钥解密响应
-        String decryptByPrivateKeyA = Rsa2Kits.buildRSADecryptByPrivateKey(encryptByPublicKeyA, privateKeyA);
+        String decryptByPrivateKeyA = Rsa2Utils.buildRSADecryptByPrivateKey(encryptByPublicKeyA, privateKeyA);
         System.out.println("用A公司的私钥解密请求===>"+decryptByPrivateKeyA);
     }
 

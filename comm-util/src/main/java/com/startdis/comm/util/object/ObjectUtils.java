@@ -7,9 +7,9 @@ import java.util.*;
 /**
  * @author Startdis
  * @email startdis@dianjiu.cc
- * @desc ObjectKits 对象工具箱
+ * @desc ObjectUtils 对象工具箱
  */
-public class ObjectKits {
+public class ObjectUtils {
 
     /**
      * 判断对象是否为空
@@ -26,7 +26,7 @@ public class ObjectKits {
             try {
                 for (Field field : fields) {
                     field.setAccessible(true);
-                    if (!"serialVersionUID".equals(field.getName()) && !ObjectKits.isNull(field.get(object))) {
+                    if (!"serialVersionUID".equals(field.getName()) && !ObjectUtils.isNull(field.get(object))) {
                         return false;
                     }
                 }

@@ -10,7 +10,7 @@ import java.util.Collection;
  * @email startdis@dianjiu.cc
  * @desc 请求路径匹配工具类
  */
-public class UrlMatchUtil {
+public class UrlMatchUtils {
     private static final AntPathMatcher matcher = new AntPathMatcher();
 
     /**

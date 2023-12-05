@@ -7,9 +7,9 @@ import com.startdis.comm.exception.custom.BusinessException;
 /**
  * @author Startdis
  * @email startdis@dianjiu.cc
- * @desc AssertKits
+ * @desc AssertUtils
  */
-public class AssertKits {
+public class AssertUtils {
     /**
      * 检查表达式是否为true,true忽略,false抛出异常
      *

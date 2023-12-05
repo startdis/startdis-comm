@@ -7,6 +7,11 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.*;
 
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc FtpUtils
+ */
 public class FtpUtils {
 
     /**

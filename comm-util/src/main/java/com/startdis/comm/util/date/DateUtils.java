@@ -5,7 +5,12 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtil {
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc Base64Kits
+ */
+public class DateUtils {
 
     public static final String SHORT_DATE_FORMAT = "yyyyMMdd";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

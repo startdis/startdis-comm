@@ -1,8 +1,12 @@
 package com.startdis.comm.util.id;
 
-
 import java.util.UUID;
 
+/**
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc UUIDUtils
+ */
 public class UUIDUtils {
 
     /**

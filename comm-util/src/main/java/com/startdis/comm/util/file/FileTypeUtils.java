@@ -10,9 +10,9 @@ import java.util.Objects;
 /**
  * @author Startdis
  * @email startdis@dianjiu.cc
- * @desc FileTypeKits
+ * @desc FileTypeUtils
  */
-public class FileTypeKits {
+public class FileTypeUtils {
     /**
      * 获取文件类型
      * <p>

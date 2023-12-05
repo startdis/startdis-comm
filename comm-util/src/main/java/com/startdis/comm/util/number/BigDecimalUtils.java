@@ -5,10 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author DianJiu
- * @email lidianjiu@njydsz.com
- * @date 2022-07-26
- * @desc
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc BigDecimalUtils
  */
 public class BigDecimalUtils {
     

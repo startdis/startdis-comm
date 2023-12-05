@@ -12,12 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author DianJiu
- * @email lidianjiu@njydsz.com
- * @date 2022-07-26
- * @desc
+ * @author Startdis
+ * @email startdis@dianjiu.cc
+ * @desc Rsa2Utils
  */
-public class Rsa2Kits {
+public class Rsa2Utils {
     public static final String CHARSET = "UTF-8";
     //密钥算法
     public static final String ALGORITHM_RSA = "RSA";
@@ -27,7 +26,7 @@ public class Rsa2Kits {
     //用于封装随机产生的公钥与私钥
     private static Map<String, String> keyPairMap = new HashMap<String, String>();
 
-    private Rsa2Kits() {
+    private Rsa2Utils() {
     }
 
     public static void main(String[] args) {

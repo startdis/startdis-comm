@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author startdis
  */
-public class StringKits extends org.apache.commons.lang3.StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 空字符串
      */
@@ -185,7 +185,7 @@ public class StringKits extends org.apache.commons.lang3.StringUtils {
             return new ArrayList<>(0);
         }
 
-        if (StringKits.isEmpty(delim)) {
+        if (StringUtils.isEmpty(delim)) {
             List<String> result = new ArrayList<>(1);
             result.add(str);
 
@@ -307,7 +307,7 @@ public class StringKits extends org.apache.commons.lang3.StringUtils {
         if (isEmpty(params) || isEmpty(template)) {
             return template;
         }
-        return StringFormatter.format(template, params);
+        return StringFormatterUtils.format(template, params);
     }
 
     /**
