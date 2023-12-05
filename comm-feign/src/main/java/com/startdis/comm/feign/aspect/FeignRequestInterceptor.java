@@ -5,7 +5,7 @@ import com.startdis.comm.core.enums.IdentityTypeEnum;
 import com.startdis.comm.core.enums.PermissionScopeEnum;
 import com.startdis.comm.util.auth.AuthInfoUtils;
 import com.startdis.comm.util.http.ServletUtils;
-import com.startdis.comm.util.ip.IpUtils;
+import com.startdis.comm.util.ip.IpAddrUtils;
 import com.startdis.comm.util.string.StringUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -60,7 +60,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             }
 
             // 传递请求来源请求头，防止丢失
-            requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr(ServletUtils.getRequest()));
+            requestTemplate.header("X-Forwarded-For", IpAddrUtils.getIpAddr(ServletUtils.getRequest()));
         }
     }
 }

@@ -76,6 +76,11 @@
             <groupId>com.blueconic</groupId>
             <artifactId>browscap-java</artifactId>
         </dependency>
+        <!--ip2region-->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
         <!--hutool-->
         <dependency>
             <artifactId>hutool-core</artifactId>
