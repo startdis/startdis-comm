@@ -35,6 +35,7 @@
         <guava.version>31.1-jre</guava.version>
         <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
         <httpclient.version>4.5.13</httpclient.version>
+        <browscap.version>1.4.1</browscap.version>
         <hutool.version>5.8.4</hutool.version>
         <jackson.version>2.13.3</jackson.version>
         <java-jwt.version>4.0.0</java-jwt.version>
@@ -357,6 +358,12 @@
                 <artifactId>gson</artifactId>
                 <groupId>com.google.code.gson</groupId>
                 <version>${gson.version}</version>
+            </dependency>
+            <!--user-agent-->
+            <dependency>
+                <groupId>com.blueconic</groupId>
+                <artifactId>browscap-java</artifactId>
+                <version>${browscap.version}</version>
             </dependency>
             <!-- hutool-all -->
             <dependency>
