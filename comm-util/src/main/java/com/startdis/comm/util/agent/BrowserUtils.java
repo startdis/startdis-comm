@@ -1,7 +1,6 @@
 package com.startdis.comm.util.agent;
 
 
-import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
@@ -57,7 +56,7 @@ public class BrowserUtils {
      */
     public static String getBrowserName(HttpServletRequest request) {
         Capabilities capabilities = getCapabilities(request);
-        return capabilities.getValue(BrowsCapField.BROWSER);
+        return capabilities.getBrowser();
     }
 
     /**
@@ -92,7 +91,8 @@ public class BrowserUtils {
     }
 
     public static void main(String[] args) {
-        final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36";
+        //final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36";
+        final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
         try {
             UserAgentParser userAgentParser = new UserAgentService().loadParser();
             Capabilities capabilities = userAgentParser.parse(userAgent);
