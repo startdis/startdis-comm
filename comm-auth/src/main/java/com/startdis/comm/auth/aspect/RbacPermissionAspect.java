@@ -1,6 +1,7 @@
 package com.startdis.comm.auth.aspect;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.startdis.comm.auth.annotation.RbacPermission;
 import com.startdis.comm.core.constant.Constants;
@@ -131,8 +132,12 @@ public class RbacPermissionAspect {
             // 校验角色
             if (StringUtils.isNotBlank(roles)) {
                 // 校验用户角色
-                JSONObject jsonObject = JSONObject.parseObject(String.valueOf(map.get("user")));
-                if (!Arrays.asList(roles.split(",")).contains(jsonObject.get("roleCode"))) {
+//                JSONObject jsonObject = JSONObject.parseObject(String.valueOf(map.get("user")));
+//                if (!Arrays.asList(roles.split(",")).contains(jsonObject.get("roleCode"))) {
+//                    throw new BusinessException(Constants.CODE_403, "当前角色权限不足");
+//                }
+                String roleCode = String.valueOf(map.get("roleCode"));
+                if (!Arrays.asList(roles.split(",")).contains(roleCode)) {
                     throw new BusinessException(Constants.CODE_403, "当前角色权限不足");
                 }
             }
@@ -140,7 +145,9 @@ public class RbacPermissionAspect {
             if (StringUtils.isNotBlank(permissions)) {
                 // 组装用户权限
                 StringBuilder userPermissions = new StringBuilder();
-                List<JSONObject> menus = JSONObject.parseArray(String.valueOf(map.get("menus")), JSONObject.class);
+//                List<JSONObject> menus = JSONObject.parseArray(String.valueOf(map.get("menus")), JSONObject.class);
+                String menuString = JSONObject.toJSONString(map.get("menus"));
+                List<JSONObject> menus = JSONObject.parseArray(menuString);
                 for (int i = 0; i < menus.size(); i++) {
                     userPermissions.append(menus.get(i).get("menuPermission"));
                     if(i>0 && i != menus.size()-1){
