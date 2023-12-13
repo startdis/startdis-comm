@@ -150,7 +150,10 @@ public class RbacPermissionAspect {
                 List<JSONObject> menus = JSONObject.parseArray(menuString);
                 for (int i = 0; i < menus.size(); i++) {
                     userPermissions.append(menus.get(i).get("menuPermission"));
-                    if(i>0 && i != menus.size()-1){
+//                    if(i>0 && i != menus.size()-1){
+//                        userPermissions.append(",");
+//                    }
+                    if(i != menus.size()-1){
                         userPermissions.append(",");
                     }
                 }
