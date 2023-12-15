@@ -3,9 +3,8 @@ package com.startdis.comm.util.bean;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.BeanUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * @author Startdis
@@ -70,5 +69,58 @@ public class BeanCopyUtils {
         source.forEach(o -> res.add(BeanCopyUtils.copyPropertiesThird(o, clazz)));
         return res;
     }
-    
+
+
+    public static Map<String, Object> entityToMap(Object object) {
+        Map<String, Object> reMap = new HashMap();
+        if (object == null) {
+            return null;
+        } else {
+            List<Field> fields = new ArrayList();
+            List<String> fieldsName = new ArrayList();
+
+            for(Class tempClass = object.getClass(); tempClass != null; tempClass = tempClass.getSuperclass()) {
+                fields.addAll(Arrays.asList(tempClass.getDeclaredFields()));
+            }
+
+            List<Field> childFields = Arrays.asList(object.getClass().getDeclaredFields());
+            Iterator var6 = childFields.iterator();
+
+            Field field;
+            while(var6.hasNext()) {
+                field = (Field)var6.next();
+                fieldsName.add(field.getName());
+            }
+
+            try {
+                var6 = fields.iterator();
+
+                while(var6.hasNext()) {
+                    field = (Field)var6.next();
+
+                    try {
+                        Field f;
+                        Object o;
+                        if (fieldsName.contains(field.getName())) {
+                            f = object.getClass().getDeclaredField(field.getName());
+                            f.setAccessible(true);
+                            o = f.get(object);
+                            reMap.put(field.getName(), o);
+                        } else {
+                            f = object.getClass().getSuperclass().getDeclaredField(field.getName());
+                            f.setAccessible(true);
+                            o = f.get(object);
+                            reMap.put(field.getName(), o);
+                        }
+                    } catch (Exception var10) {
+                        var10.printStackTrace();
+                    }
+                }
+            } catch (SecurityException var11) {
+                var11.printStackTrace();
+            }
+
+            return reMap;
+        }
+    }
 }
