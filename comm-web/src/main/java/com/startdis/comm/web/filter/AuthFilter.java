@@ -1,6 +1,6 @@
 package com.startdis.comm.web.filter;
 
-import cn.hutool.extra.spring.SpringUtil;
+
 import com.alibaba.fastjson.JSON;
 import com.startdis.comm.core.config.AuthFilterConfig;
 import com.startdis.comm.core.constant.FilterIgnoreConstant;
@@ -11,6 +11,7 @@ import com.startdis.comm.util.auth.RequestHolder;
 import com.startdis.comm.util.url.UrlIgnoreUtils;
 import com.startdis.comm.web.auth.AuthHandler;
 import com.startdis.comm.web.auth.AuthHandlerFactory;
+import com.startdis.comm.web.excel.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -42,14 +43,16 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String servletPath = request.getServletPath();
 
-        String applicationName = SpringUtil.getApplicationName();
+//        String applicationName = SpringUtil.getApplicationName();
+        String applicationName = SpringContextUtil.getApplicationContext().getApplicationName();
         boolean ignoreService = FilterIgnoreConstant.AUTH_FILTER_IGNORE_SERVICE_NAME.contains(applicationName);
         if (ignoreService) {
             filterChain.doFilter(request, servletResponse);
             return;
         }
 
-        AuthFilterConfig authFilterConfig = SpringUtil.getBean(AuthFilterConfig.class);
+        AuthFilterConfig authFilterConfig = SpringContextUtil.getBean(AuthFilterConfig.class);
+//        AuthFilterConfig authFilterConfig = SpringUtil.getBean(AuthFilterConfig.class);
         Set<String> ignoreUrl = FilterIgnoreConstant.FILTER_COMMON_IGNORE_URL;
         List<String> commonIgnoreUrl = authFilterConfig.getCommonIgnoreUrl();
         List<String> customIgnoreUrl = authFilterConfig.getCustomIgnoreUrl();
