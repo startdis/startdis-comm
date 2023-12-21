@@ -159,7 +159,7 @@ public class RbacPermissionAspect {
                 }
                 // 校验用户权限
                 if (!Arrays.asList(userPermissions.toString().split(",")).containsAll(Arrays.asList(permissions.split(",")))) {
-                    throw new BusinessException(Constants.CODE_401, "无权限访问资源");
+                    throw new BusinessException(Constants.CODE_403, "当前用户无权限访问资源");
                 }
             }
         }
