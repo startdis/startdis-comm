@@ -1,6 +1,7 @@
 package com.startdis.comm.auth.aspect;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.startdis.comm.auth.annotation.RbacPermission;
@@ -9,6 +10,7 @@ import com.startdis.comm.core.constant.HeaderConstant;
 import com.startdis.comm.exception.custom.BusinessException;
 import com.startdis.comm.redis.enums.RedisKeysEnum;
 import com.startdis.comm.redis.service.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -39,10 +41,13 @@ import java.util.*;
 @Aspect
 @Component
 @Order(10)
+@Slf4j
 public class RbacPermissionAspect {
     private static final Logger logger = LoggerFactory.getLogger(RbacPermissionAspect.class);
 
     private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<Map<String, Object>>();
+
+    private final String ROLE_MENU = "tdcd-cloud-mps:role-menu:{}";
 
     @Resource
     private RedisService redisService;
@@ -129,6 +134,7 @@ public class RbacPermissionAspect {
             if (null == map || map.size() == 0) {
                 throw new BusinessException(Constants.LOGIN_NO_PERMISSION, "鉴权令牌不合法或已失效，请刷新令牌！");
             }
+            String roleCode = String.valueOf(map.get("roleCode"));
             // 校验角色
             if (StringUtils.isNotBlank(roles)) {
                 // 校验用户角色
@@ -136,7 +142,6 @@ public class RbacPermissionAspect {
 //                if (!Arrays.asList(roles.split(",")).contains(jsonObject.get("roleCode"))) {
 //                    throw new BusinessException(Constants.CODE_403, "当前角色权限不足");
 //                }
-                String roleCode = String.valueOf(map.get("roleCode"));
                 if (!Arrays.asList(roles.split(",")).contains(roleCode)) {
                     throw new BusinessException(Constants.CODE_403, "当前角色权限不足");
                 }
@@ -145,16 +150,23 @@ public class RbacPermissionAspect {
             if (StringUtils.isNotBlank(permissions)) {
                 // 组装用户权限
                 StringBuilder userPermissions = new StringBuilder();
-//                List<JSONObject> menus = JSONObject.parseArray(String.valueOf(map.get("menus")), JSONObject.class);
-                String menuString = JSONObject.toJSONString(map.get("menus"));
-                List<JSONObject> menus = JSONObject.parseArray(menuString);
+
+//                String menuString = JSONObject.toJSONString(map.get("menus"));
+//                List<JSONObject> menus = JSONObject.parseArray(menuString);
+                String data = null;
+                try {
+                    data = redisService.getString(StrUtil.format(ROLE_MENU, roleCode));
+                } catch (Exception e) {
+                    log.error("获取用户权限异常:{}", e.getMessage());
+                    throw new BusinessException(Constants.CODE_403, "获取用户权限异常");
+                }
+                List<JSONObject> menus = JSONObject.parseArray(data, JSONObject.class);
                 for (int i = 0; i < menus.size(); i++) {
-                    userPermissions.append(menus.get(i).get("menuPermission"));
-//                    if(i>0 && i != menus.size()-1){
-//                        userPermissions.append(",");
-//                    }
-                    if(i != menus.size()-1){
-                        userPermissions.append(",");
+                    if ("2".equals(menus.get(i).get("menuType"))) {
+                        userPermissions.append(menus.get(i).get("menuPermission"));
+                        if (i != menus.size() - 1) {
+                            userPermissions.append(",");
+                        }
                     }
                 }
                 // 校验用户权限
