@@ -163,4 +163,9 @@ public class Constants {
      * SRS校验数据错误码
      */
     public static final String SRS_DATA_CHECK_ERROR = "A02001";
+
+    /**
+     * 功能检验错误码
+     */
+    public static final String COMM_CHECK_ERROR = "222222";
 }
