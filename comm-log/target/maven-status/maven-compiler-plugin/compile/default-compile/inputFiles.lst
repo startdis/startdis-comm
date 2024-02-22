@@ -1,0 +1,9 @@
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\service\impl\SystemLogServiceImpl.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\config\LogRecordAutoConfigure.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\interceptor\UserInterceptor.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\service\SystemLogService.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\entity\SystemLog.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\mapper\SystemLogMapper.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\annotation\LogRecord.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\aspect\LogRecordAspect.java
+D:\Codes\startdis\startdis-comm\comm-log\src\main\java\com\startdis\comm\log\annotation\EnableLogRecord.java

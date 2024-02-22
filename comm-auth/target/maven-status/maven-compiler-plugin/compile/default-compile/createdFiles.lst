@@ -1,0 +1,2 @@
+com\startdis\comm\auth\aspect\RbacPermissionAspect.class
+com\startdis\comm\auth\annotation\RbacPermission.class

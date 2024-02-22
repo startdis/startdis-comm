@@ -65,12 +65,12 @@
         <spring-boot.version>2.5.8</spring-boot.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
-        <startdis.version>1.0.0-SNAPSHOT</startdis.version>
         <swagger-io.version>2.2.10</swagger-io.version>
         <swagger-springfox.version>3.0.0</swagger-springfox.version>
         <trace.version>8.13.0</trace.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <xxl-job.version>2.3.1</xxl-job.version>
+        <startdis.version>1.0.0-SNAPSHOT</startdis.version>
     </properties>
 
     <dependencyManagement>
@@ -136,6 +136,11 @@
             </dependency>
             <dependency>
                 <artifactId>comm-job</artifactId>
+                <groupId>com.startdis.comm</groupId>
+                <version>${startdis.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>comm-log</artifactId>
                 <groupId>com.startdis.comm</groupId>
                 <version>${startdis.version}</version>
             </dependency>

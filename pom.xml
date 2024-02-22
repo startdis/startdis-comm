@@ -24,6 +24,7 @@
         <module>comm-thread</module>
         <module>comm-exception</module>
         <module>comm-job</module>
+        <module>comm-log</module>
         <module>comm-util</module>
         <module>comm-auth</module>
         <module>comm-safe</module>

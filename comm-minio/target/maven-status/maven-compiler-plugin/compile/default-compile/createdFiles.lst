@@ -1,0 +1,7 @@
+com\startdis\comm\minio\config\MinioProperties.class
+com\startdis\comm\minio\domian\BucketVO.class
+com\startdis\comm\minio\domian\FileInfoVO$FileInfoVOBuilder.class
+com\startdis\comm\minio\config\MinioConfig.class
+com\startdis\comm\minio\domian\BucketVO$BucketVOBuilder.class
+com\startdis\comm\minio\domian\FileInfoVO.class
+com\startdis\comm\minio\service\MinIOService.class

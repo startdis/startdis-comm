@@ -1,0 +1,9 @@
+com\startdis\comm\log\annotation\EnableLogRecord.class
+com\startdis\comm\log\service\SystemLogService.class
+com\startdis\comm\log\service\impl\SystemLogServiceImpl.class
+com\startdis\comm\log\aspect\LogRecordAspect.class
+com\startdis\comm\log\interceptor\UserInterceptor.class
+com\startdis\comm\log\annotation\LogRecord.class
+com\startdis\comm\log\entity\SystemLog.class
+com\startdis\comm\log\mapper\SystemLogMapper.class
+com\startdis\comm\log\config\LogRecordAutoConfigure.class

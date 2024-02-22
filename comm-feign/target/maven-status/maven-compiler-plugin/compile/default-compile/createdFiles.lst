@@ -1,0 +1,3 @@
+com\startdis\comm\feign\annotation\EnableStartdisFeignClients.class
+com\startdis\comm\feign\aspect\FeignAutoConfiguration.class
+com\startdis\comm\feign\aspect\FeignRequestInterceptor.class

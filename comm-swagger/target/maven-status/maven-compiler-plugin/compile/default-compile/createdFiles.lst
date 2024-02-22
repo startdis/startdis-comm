@@ -1,0 +1,8 @@
+com\startdis\comm\swagger\aspect\SwaggerAutoConfiguration.class
+com\startdis\comm\swagger\aspect\SwaggerBeanPostProcessor.class
+com\startdis\comm\swagger\aspect\SwaggerProperties.class
+com\startdis\comm\swagger\aspect\SwaggerProperties$Authorization.class
+com\startdis\comm\swagger\aspect\SwaggerWebConfiguration.class
+com\startdis\comm\swagger\annotation\EnableStartdisSwagger2.class
+com\startdis\comm\swagger\aspect\SwaggerProperties$Contact.class
+com\startdis\comm\swagger\aspect\SwaggerProperties$AuthorizationScope.class
