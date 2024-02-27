@@ -2,12 +2,12 @@ package com.startdis.comm.log.aspect;
 
 
 import com.alibaba.fastjson.JSON;
-import com.startdis.comm.log.entity.SystemLog;
-import com.startdis.comm.log.service.SystemLogService;
-import com.startdis.comm.core.spring.SpringBeans;
 import com.startdis.comm.exception.custom.BusinessException;
 import com.startdis.comm.exception.util.ExceptionUtils;
 import com.startdis.comm.log.annotation.LogRecord;
+import com.startdis.comm.log.enums.BusinessType;
+import com.startdis.comm.log.model.LogRecordDTO;
+import com.startdis.comm.log.service.LogRecordService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -22,6 +22,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 /**
  * @author DianJiu
- * @email dianjiusir@gmail.com
+ * @email dianjiuxyz@gmail.com
  * @date 2022-07-19
  * @desc
  */
@@ -44,9 +45,8 @@ public class LogRecordAspect {
 
     private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<Map<String, Object>>();
 
-    //注入Service用于把日志保存数据库
-    //@Resource
-    //private SystemLogService systemLogService;
+    @Resource
+    private LogRecordService logRecordService;
 
     @Pointcut("@annotation(com.startdis.comm.log.annotation.LogRecord)")
     public void logRecordPointCut() {
@@ -84,7 +84,17 @@ public class LogRecordAspect {
         threadInfo.put("contentType", request.getContentType());
         //包含了一个特征字符串，用来让网络协议的对端来识别发起请求的用户代理软件的应用类型、操作系统、软件开发商以及版本号。
         threadInfo.put("userAgent", request.getHeader("User-Agent"));
-        threadInfo.put("businessNo", request.getHeader("businessNo"));
+        //从请求头获取业务流水号
+        threadInfo.put("groupTenantId", request.getHeader("X-Group-Tenant-Id"));
+        threadLocal.set(threadInfo);
+        //从请求头获取业务流水号
+        threadInfo.put("companyTenantId", request.getHeader("X-Company-Tenant-Id"));
+        threadLocal.set(threadInfo);
+        //从请求头获取业务流水号
+        threadInfo.put("operator", request.getHeader("X-Unique-Id"));
+        threadLocal.set(threadInfo);
+        //从请求头获取业务流水号
+        threadInfo.put("businessNo", request.getHeader("X-Business-No"));
         threadLocal.set(threadInfo);
         //获取方法签名
         MethodSignature signature = getSignature(joinPoint);
@@ -92,7 +102,6 @@ public class LogRecordAspect {
         Method method = getMethod(joinPoint);
         //获取注解对象
         LogRecord logRecord = getAnnotation(joinPoint, LogRecord.class);
-        //threadInfo.put("desc", logRecord.detail());
         // 获取连接点所在类名
         String classname = joinPoint.getTarget().getClass().getSimpleName();
         // 获取连接点所在方法名称
@@ -120,7 +129,7 @@ public class LogRecordAspect {
         //执行到这里开始走进来的方法体（必须声明）
         LocalDateTime start = LocalDateTime.now();
         LocalDateTime end = null;
-        Long consumTime = 0L;
+        Long executeTime = 0L;
         String errorInfo = "";
         //实现连接点方法的执行，以及成功失败的打点，出现异常的时候还会记录日志
         Object returnValue;
@@ -129,16 +138,16 @@ public class LogRecordAspect {
             ////记录方法的执行时间
             if (logRecord.recordSuccessMetrics()) {
                 end = LocalDateTime.now();
-                consumTime = Duration.between(start, end).toMillis();
+                executeTime = Duration.between(start, end).toMillis();
                 //在生产级代码中，我们应考虑使用类似Micrometer的指标框架，把打点信息记录到时间序列数据库中，实现通过图表来查看方法的调用次数和执行时间，在设计篇我们会重点介绍
-                logger.info(String.format("【成功打点】调用 %s 方法成功，耗时：%d ms", name, consumTime));
+                logger.info(String.format("【成功打点】调用 %s 方法成功，耗时：%d ms", name, executeTime));
             }
         } catch (Throwable throwable) {
             //记录方法的执行时间
             if (logRecord.recordFailMetrics()) {
                 end = LocalDateTime.now();
-                consumTime = Duration.between(start, end).toMillis();
-                logger.info(String.format("【失败打点】调用 %s 方法失败，耗时：%d ms", name, consumTime));
+                executeTime = Duration.between(start, end).toMillis();
+                logger.info(String.format("【失败打点】调用 %s 方法失败，耗时：%d ms", name, executeTime));
             }
             //记录异常日志
             if (logRecord.logException()) {
@@ -158,27 +167,31 @@ public class LogRecordAspect {
         if (logRecord.logReturn()) {
             logger.info(String.format("【出参日志】调用 %s 方法的返回是：【%s】", name, returnValue));
         }
-        if (logRecord.intoDb()) {
-            //TODO 异步线程池写库
+
+        if (logRecord.condition()) {
             Map<String, Object> objectMap = threadLocal.get();
-            SystemLog systemLog = new SystemLog();
-            systemLog.setBusinessNo(String.valueOf(objectMap.get("businessNo")));
-            //systemLog.setUserId();
-            systemLog.setRequestUrl(String.valueOf(objectMap.get("url")));
-            systemLog.setRequestDesc(logRecord.detail());
-            systemLog.setRequestBody(JSON.toJSONString(args));
-            systemLog.setRequestIp(String.valueOf(objectMap.get("ip")));
-            systemLog.setRequestType(String.valueOf(objectMap.get("httpMethod")));
-            systemLog.setContentType(String.valueOf(objectMap.get("contentType")));
-            systemLog.setUserAgent(String.valueOf(objectMap.get("userAgent")));
-            systemLog.setRequestTime(start);
-            systemLog.setResponseTime(end);
-            systemLog.setConsumTime(consumTime);
-            systemLog.setResponseBody(JSON.toJSONString(returnValue));
-            systemLog.setErrorInfo(errorInfo);
-            systemLog.setIsDeleted(0);
-            SystemLogService systemLogService = SpringBeans.getBean(SystemLogService.class);
-            systemLogService.save(systemLog);
+            LogRecordDTO logRecordDTO = new LogRecordDTO();
+            logRecordDTO.setGroupTenantId(String.valueOf(objectMap.get("groupTenantId")));
+            logRecordDTO.setCompanyTenantId(String.valueOf(objectMap.get("companyTenantId")));
+            logRecordDTO.setOperator(String.valueOf(objectMap.get("operator")));
+            //logRecordDTO.setModule();
+            logRecordDTO.setBusinessNo(String.valueOf(objectMap.get("businessNo")));
+            logRecordDTO.setBusinessType(BusinessType.getMsg(logRecord.businessType()));
+            logRecordDTO.setLogContent(logRecord.content());
+            logRecordDTO.setLogExtras(logRecord.extras());
+            logRecordDTO.setRequestUrl(String.valueOf(objectMap.get("url")));
+            logRecordDTO.setRequestIp(String.valueOf(objectMap.get("ip")));
+            logRecordDTO.setRequestType(String.valueOf(objectMap.get("httpMethod")));
+            logRecordDTO.setContentType(String.valueOf(objectMap.get("contentType")));
+            logRecordDTO.setRequestBody(JSON.toJSONString(args));
+            logRecordDTO.setResponseBody(JSON.toJSONString(returnValue));
+            logRecordDTO.setRequestTime(start);
+            logRecordDTO.setResponseTime(end);
+            logRecordDTO.setExecuteTime(executeTime);
+            //logRecordDTO.setTraceId();
+            logRecordDTO.setErrorInfo(errorInfo);
+            logRecordDTO.setUserAgent(String.valueOf(objectMap.get("userAgent")));
+            logRecordService.record(logRecordDTO);
         }
         return returnValue;
     }

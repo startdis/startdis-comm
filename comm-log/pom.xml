@@ -36,11 +36,7 @@
         </dependency>
         <dependency>
             <groupId>com.startdis.comm</groupId>
-            <artifactId>comm-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.startdis.comm</groupId>
-            <artifactId>comm-domain</artifactId>
+            <artifactId>comm-util</artifactId>
         </dependency>
         <dependency>
             <groupId>com.startdis.comm</groupId>
@@ -54,15 +50,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <!--fastjson-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
         </dependency>
         <!--nacos-->
         <dependency>

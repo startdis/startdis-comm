@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * @author DianJiu
- * @email dianjiusir@gmail.com
+ * @email dianjiuxyz@gmail.com
  * @date 2022-07-19
  * @desc 日志记录开启注解
  */

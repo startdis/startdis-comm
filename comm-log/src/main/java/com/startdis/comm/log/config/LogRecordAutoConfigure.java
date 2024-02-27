@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 
 /**
  * @author DianJiu
- * @email dianjiusir@gmail.com
+ * @email dianjiuxyz@gmail.com
  * @date 2022-07-19
  * @desc
  */
@@ -27,13 +27,20 @@ public class LogRecordAutoConfigure {
     private String enabledConfig;
 
     /**
+     * 操作日志远程推送地址
+     */
+    @Value("${log.record.pushUrl}")
+    private String pushUrl;
+
+    /**
      * 错误提醒
      */
     @PostConstruct
     protected LogRecordAspect init() {
         if (StringUtils.isBlank(enabledConfig)) {
-            log.error("Please config the log.record.enabled property in application.yml file to enable log record function.");
-            throw new BusinessException("A0001", "Please config the log.record.enabled property in application.yml file to enable log record function.");
+        //if (StringUtils.isBlank(enabledConfig)||StringUtils.isBlank(pushUrl)) {
+            log.error("Please config the log.record property in application.yml file to enable log record function and push operation log url.");
+            throw new BusinessException("A0001", "Please config the log.record property in application.yml file to enable log record function.");
         }
         return new LogRecordAspect();
     }

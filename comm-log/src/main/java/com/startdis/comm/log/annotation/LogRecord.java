@@ -1,5 +1,6 @@
 package com.startdis.comm.log.annotation;
 
+import com.startdis.comm.log.enums.BusinessType;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
@@ -7,9 +8,9 @@ import java.lang.annotation.*;
 
 /**
  * @author DianJiu
- * @email dianjiusir@gmail.com
+ * @email dianjiuxyz@gmail.com
  * @date 2022-07-19
- * @desc 日志记录
+ * @desc 操作日志记录
  */
 @Inherited
 @Documented
@@ -19,31 +20,62 @@ import java.lang.annotation.*;
 public @interface LogRecord {
 
     /**
-     * 记录操作日志的修改详情
-     *
-     * @return
+     * 集团租户ID
      */
-    String detail() default "";
+    String groupTenantId() default "";
 
     /**
-     * 操作日志的执行人
+     * 公司租户ID
+     */
+    String companyTenantId() default "";
+
+
+    /**
+     * 操作人ID
      *
      * @return
      */
     String operator() default "";
 
     /**
-     * 操作日志绑定的业务流水号
+     * 业务模块，区分不同业务模块的应用编码
      *
      * @return
      */
-    //String businessNo();
+    String module() default "";
 
     /**
-     * 标识该条操作日志是否需要持久化存储
+     * 业务流水号
+     *
      * @return
      */
-    boolean intoDb() default false;
+    String businessNo() default "";
+
+    /**
+     * 日志操作类型
+     */
+    BusinessType businessType() default BusinessType.OTHER;
+
+    /**
+     * 日志模板内容
+     *
+     * @return
+     */
+    String content();
+
+    /**
+     * 额外的补充内容
+     *
+     * @return
+     */
+    String extras() default "";
+
+    /**
+     * 是否记录日志的条件
+     *
+     * @return
+     */
+    boolean condition() default true;
 
     /**
      * 在方法成功执行后打点，记录方法的执行时间发送到指标系统，默认开启
