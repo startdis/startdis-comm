@@ -1,5 +1,6 @@
 package com.startdis.comm.log.service.impl;
 
+import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson2.JSON;
 import com.startdis.comm.core.spring.SpringProperties;
 import com.startdis.comm.log.model.LogRecordDTO;
@@ -7,6 +8,10 @@ import com.startdis.comm.log.service.LogRecordService;
 import com.startdis.comm.util.http.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+
+import static com.startdis.comm.core.constant.HeaderConstant.X_SERVICE_TYPE;
 
 /**
  * <p>
@@ -30,7 +35,8 @@ public class LogRecordServiceImpl implements LogRecordService {
     //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void record(LogRecordDTO logRecord) {
         String pushUrl = SpringProperties.getString("log.record.pushUrl");
-        HttpClientUtils.doPostJson(pushUrl, JSON.toJSONString(logRecord));
+        Map<String, String> headMap = MapUtil.builder(X_SERVICE_TYPE, "webService").build();
+        HttpClientUtils.doPostJson(pushUrl, JSON.toJSONString(logRecord), headMap);
         log.info("【logRecord】logInfo={}", JSON.toJSONString(logRecord));
     }
 }

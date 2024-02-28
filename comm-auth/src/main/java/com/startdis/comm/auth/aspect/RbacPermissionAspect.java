@@ -132,7 +132,7 @@ public class RbacPermissionAspect {
             // 根据鉴权令牌去redis查询到用户信息、角色信息、权限信息
             Map map = redisService.hmget(RedisKeysEnum.ACCESS_TOKEN.getKey(String.valueOf(threadInfo.get("accessToken"))));
             if (null == map || map.size() == 0) {
-                throw new BusinessException(Constants.LOGIN_NO_PERMISSION, "鉴权异常，请刷新令牌! please login again!");
+                throw new BusinessException(Constants.LOGIN_NO_PERMISSION, "accessToken expire! please login again!");
             }
             String roleCode = String.valueOf(map.get("roleCode"));
             // 校验角色
@@ -143,7 +143,7 @@ public class RbacPermissionAspect {
 //                    throw new BusinessException(Constants.CODE_403, "当前角色权限不足");
 //                }
                 if (!Arrays.asList(roles.split(",")).contains(roleCode)) {
-                    throw new BusinessException(Constants.CODE_403, "当前角色权限不足! no Permission!");
+                    throw new BusinessException(Constants.CODE_403, "the role no Permission!");
                 }
             }
             // 校验权限
@@ -158,7 +158,7 @@ public class RbacPermissionAspect {
                     data = redisService.getString(StrUtil.format(ROLE_MENU, roleCode));
                 } catch (Exception e) {
                     log.error("获取用户权限异常:{}", e.getMessage());
-                    throw new BusinessException(Constants.CODE_403, "获取用户权限异常! get userPermission error!");
+                    throw new BusinessException(Constants.CODE_403, "get user Permission error!");
                 }
                 List<JSONObject> menus = JSONObject.parseArray(data, JSONObject.class);
                 for (int i = 0; i < menus.size(); i++) {
@@ -171,7 +171,7 @@ public class RbacPermissionAspect {
                 }
                 // 校验用户权限
                 if (!Arrays.asList(userPermissions.toString().split(",")).containsAll(Arrays.asList(permissions.split(",")))) {
-                    throw new BusinessException(Constants.CODE_403, "当前用户无权限访问资源! no Permission");
+                    throw new BusinessException(Constants.CODE_403, "the user no Permission");
                 }
             }
         }
