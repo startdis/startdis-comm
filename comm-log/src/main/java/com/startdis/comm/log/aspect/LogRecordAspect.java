@@ -30,6 +30,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author DianJiu
@@ -173,16 +174,16 @@ public class LogRecordAspect {
             LogRecordDTO logRecordDTO = new LogRecordDTO();
             logRecordDTO.setGroupTenantId(String.valueOf(objectMap.get("groupTenantId")));
             logRecordDTO.setCompanyTenantId(String.valueOf(objectMap.get("companyTenantId")));
-            logRecordDTO.setOperator(String.valueOf(objectMap.get("operator")));
-            //logRecordDTO.setModule();
-            logRecordDTO.setBusinessNo(String.valueOf(objectMap.get("businessNo")));
+            logRecordDTO.setOperator(Objects.nonNull(objectMap.get("operator")) ? String.valueOf(objectMap.get("operator")) : null);
+            logRecordDTO.setModule(logRecord.module());
+            logRecordDTO.setBusinessNo(Objects.nonNull(objectMap.get("businessNo")) ? String.valueOf(objectMap.get("businessNo")) : null);
             logRecordDTO.setBusinessType(BusinessType.getMsg(logRecord.businessType()));
             logRecordDTO.setLogContent(logRecord.content());
             logRecordDTO.setLogExtras(logRecord.extras());
             logRecordDTO.setRequestUrl(String.valueOf(objectMap.get("url")));
             logRecordDTO.setRequestIp(String.valueOf(objectMap.get("ip")));
             logRecordDTO.setRequestType(String.valueOf(objectMap.get("httpMethod")));
-            logRecordDTO.setContentType(String.valueOf(objectMap.get("contentType")));
+            logRecordDTO.setContentType(Objects.nonNull(objectMap.get("contentType")) ? String.valueOf(objectMap.get("contentType")) : null);
             logRecordDTO.setRequestBody(JSON.toJSONString(args));
             logRecordDTO.setResponseBody(JSON.toJSONString(returnValue));
             logRecordDTO.setRequestTime(start);
