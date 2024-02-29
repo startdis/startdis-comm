@@ -21,6 +21,11 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class LogRecordAutoConfigure {
     /**
+     * 日志监控的应用名称
+     */
+    @Value("${log.record.appName}")
+    private String appName;
+    /**
      * 是否开启监控配置参数
      */
     @Value("${log.record.enabled}")
@@ -37,8 +42,7 @@ public class LogRecordAutoConfigure {
      */
     @PostConstruct
     protected LogRecordAspect init() {
-        if (StringUtils.isBlank(enabledConfig)) {
-        //if (StringUtils.isBlank(enabledConfig)||StringUtils.isBlank(pushUrl)) {
+        if (StringUtils.isBlank(appName)||StringUtils.isBlank(enabledConfig)||StringUtils.isBlank(pushUrl)) {
             log.error("Please config the log.record property in application.yml file to enable log record function and push operation log url.");
             throw new BusinessException("A0001", "Please config the log.record property in application.yml file to enable log record function.");
         }

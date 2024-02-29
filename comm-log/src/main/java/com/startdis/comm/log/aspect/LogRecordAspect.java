@@ -2,6 +2,8 @@ package com.startdis.comm.log.aspect;
 
 
 import com.alibaba.fastjson.JSON;
+import com.startdis.comm.core.spring.SpringProperties;
+import com.startdis.comm.exception.custom.BusinessException;
 import com.startdis.comm.exception.util.ExceptionUtils;
 import com.startdis.comm.log.annotation.LogRecord;
 import com.startdis.comm.log.enums.BusinessType;
@@ -155,26 +157,117 @@ public class LogRecordAspect {
                 logger.error(String.format("【异常日志】调用 %s 方法出现异常！", name), errorInfo);
             }
             //出现异常后忽略异常返回默认值
-            if (logRecord.ignoreException()) {
-                //returnValue = getDefaultValue(signature.getReturnType());
-                //throw new SystemException("500", "系统异常");
-            }
-            //logger.error("LogRecord logAround Exception By Method：" + classname + "." + methodName);
-            throwable.printStackTrace();
-            //throw new BusinessException(((BusinessException) throwable).getCode(), ((BusinessException) throwable).getMessage());
-        }
-        //实现了返回值的日志输出
-        if (logRecord.logReturn()) {
-            logger.info(String.format("【出参日志】调用 %s 方法的返回是：【%s】", name, returnValue));
+            //if (logRecord.ignoreException()) {
+            //    returnValue = getDefaultValue(signature.getReturnType());
+            //    throw new SystemException("500", "系统异常");
+            //}
+
+            // 打印异常堆栈信息
+            //throwable.printStackTrace();
+            recordLogs(logRecord, args, start, end, executeTime, errorInfo);
+            throw new BusinessException(((BusinessException) throwable).getCode(), ((BusinessException) throwable).getMessage());
         }
 
+        //recordLogs(logRecord, args, start, end, executeTime);
+
+        //开启返回值记录并保存到数据库
+        if (logRecord.logReturn()) {
+            logger.info(String.format("【出参日志】调用 %s 方法的返回是：【%s】", name, returnValue));
+            recordLogs(logRecord, args, returnValue, start, end, executeTime);
+        }
+
+        return returnValue;
+    }
+
+    /**
+     * 操作日志保存-保存异常信息
+     *
+     * @param logRecord
+     * @param args
+     * @param start
+     * @param end
+     * @param executeTime
+     */
+    private void recordLogs(LogRecord logRecord, Object[] args, LocalDateTime start, LocalDateTime end, Long executeTime, String errorInfo) {
         if (logRecord.condition()) {
             Map<String, Object> objectMap = threadLocal.get();
             LogRecordDTO logRecordDTO = new LogRecordDTO();
             logRecordDTO.setGroupTenantId(String.valueOf(objectMap.get("groupTenantId")));
             logRecordDTO.setCompanyTenantId(String.valueOf(objectMap.get("companyTenantId")));
             logRecordDTO.setOperator(Objects.nonNull(objectMap.get("operator")) ? String.valueOf(objectMap.get("operator")) : null);
-            logRecordDTO.setModule(logRecord.module());
+            logRecordDTO.setModule(SpringProperties.getString("log.record.appName"));
+            logRecordDTO.setBusinessNo(Objects.nonNull(objectMap.get("businessNo")) ? String.valueOf(objectMap.get("businessNo")) : null);
+            logRecordDTO.setBusinessType(BusinessType.getMsg(logRecord.businessType()));
+            logRecordDTO.setLogContent(logRecord.content());
+            logRecordDTO.setLogExtras(logRecord.extras());
+            logRecordDTO.setRequestUrl(String.valueOf(objectMap.get("url")));
+            logRecordDTO.setRequestIp(String.valueOf(objectMap.get("ip")));
+            logRecordDTO.setRequestType(String.valueOf(objectMap.get("httpMethod")));
+            logRecordDTO.setContentType(Objects.nonNull(objectMap.get("contentType")) ? String.valueOf(objectMap.get("contentType")) : null);
+            logRecordDTO.setRequestBody(JSON.toJSONString(args));
+            logRecordDTO.setRequestTime(start);
+            logRecordDTO.setResponseTime(end);
+            logRecordDTO.setExecuteTime(executeTime);
+            //logRecordDTO.setTraceId();
+            logRecordDTO.setErrorInfo(errorInfo);
+            logRecordDTO.setUserAgent(String.valueOf(objectMap.get("userAgent")));
+            logRecordService.record(logRecordDTO);
+        }
+    }
+
+    /**
+     * 操作日志保存-保存成功信息-不保存返回值
+     *
+     * @param logRecord
+     * @param args
+     * @param start
+     * @param end
+     * @param executeTime
+     */
+    private void recordLogs(LogRecord logRecord, Object[] args, LocalDateTime start, LocalDateTime end, Long executeTime) {
+        if (logRecord.condition()) {
+            Map<String, Object> objectMap = threadLocal.get();
+            LogRecordDTO logRecordDTO = new LogRecordDTO();
+            logRecordDTO.setGroupTenantId(String.valueOf(objectMap.get("groupTenantId")));
+            logRecordDTO.setCompanyTenantId(String.valueOf(objectMap.get("companyTenantId")));
+            logRecordDTO.setOperator(Objects.nonNull(objectMap.get("operator")) ? String.valueOf(objectMap.get("operator")) : null);
+            logRecordDTO.setModule(SpringProperties.getString("log.record.appName"));
+            logRecordDTO.setBusinessNo(Objects.nonNull(objectMap.get("businessNo")) ? String.valueOf(objectMap.get("businessNo")) : null);
+            logRecordDTO.setBusinessType(BusinessType.getMsg(logRecord.businessType()));
+            logRecordDTO.setLogContent(logRecord.content());
+            logRecordDTO.setLogExtras(logRecord.extras());
+            logRecordDTO.setRequestUrl(String.valueOf(objectMap.get("url")));
+            logRecordDTO.setRequestIp(String.valueOf(objectMap.get("ip")));
+            logRecordDTO.setRequestType(String.valueOf(objectMap.get("httpMethod")));
+            logRecordDTO.setContentType(Objects.nonNull(objectMap.get("contentType")) ? String.valueOf(objectMap.get("contentType")) : null);
+            logRecordDTO.setRequestBody(JSON.toJSONString(args));
+            logRecordDTO.setRequestTime(start);
+            logRecordDTO.setResponseTime(end);
+            logRecordDTO.setExecuteTime(executeTime);
+            //logRecordDTO.setTraceId();
+            logRecordDTO.setUserAgent(String.valueOf(objectMap.get("userAgent")));
+            logRecordService.record(logRecordDTO);
+        }
+    }
+
+    /**
+     * 操作日志保存-保存成功信息-并保存返回值
+     *
+     * @param logRecord
+     * @param args
+     * @param returnValue
+     * @param start
+     * @param end
+     * @param executeTime
+     */
+    private void recordLogs(LogRecord logRecord, Object[] args, Object returnValue, LocalDateTime start, LocalDateTime end, Long executeTime) {
+        if (logRecord.condition()) {
+            Map<String, Object> objectMap = threadLocal.get();
+            LogRecordDTO logRecordDTO = new LogRecordDTO();
+            logRecordDTO.setGroupTenantId(String.valueOf(objectMap.get("groupTenantId")));
+            logRecordDTO.setCompanyTenantId(String.valueOf(objectMap.get("companyTenantId")));
+            logRecordDTO.setOperator(Objects.nonNull(objectMap.get("operator")) ? String.valueOf(objectMap.get("operator")) : null);
+            logRecordDTO.setModule(SpringProperties.getString("log.record.appName"));
             logRecordDTO.setBusinessNo(Objects.nonNull(objectMap.get("businessNo")) ? String.valueOf(objectMap.get("businessNo")) : null);
             logRecordDTO.setBusinessType(BusinessType.getMsg(logRecord.businessType()));
             logRecordDTO.setLogContent(logRecord.content());
@@ -189,11 +282,9 @@ public class LogRecordAspect {
             logRecordDTO.setResponseTime(end);
             logRecordDTO.setExecuteTime(executeTime);
             //logRecordDTO.setTraceId();
-            logRecordDTO.setErrorInfo(errorInfo);
             logRecordDTO.setUserAgent(String.valueOf(objectMap.get("userAgent")));
             logRecordService.record(logRecordDTO);
         }
-        return returnValue;
     }
 
 

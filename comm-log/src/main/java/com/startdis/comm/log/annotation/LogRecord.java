@@ -22,12 +22,12 @@ public @interface LogRecord {
     /**
      * 集团租户ID
      */
-    String groupTenantId() default "";
+    //String groupTenantId() default "";
 
     /**
      * 公司租户ID
      */
-    String companyTenantId() default "";
+    //String companyTenantId() default "";
 
 
     /**
@@ -35,21 +35,21 @@ public @interface LogRecord {
      *
      * @return
      */
-    String operator() default "";
+    //String operator() default "";
 
     /**
      * 业务模块，区分不同业务模块的应用编码
      *
      * @return
      */
-    String module() default "";
+    //String module() default "";
 
     /**
      * 业务流水号
      *
      * @return
      */
-    String businessNo() default "";
+    //String businessNo() default "";
 
     /**
      * 日志操作类型
