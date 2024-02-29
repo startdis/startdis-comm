@@ -2,7 +2,6 @@ package com.startdis.comm.log.aspect;
 
 
 import com.alibaba.fastjson.JSON;
-import com.startdis.comm.exception.custom.BusinessException;
 import com.startdis.comm.exception.util.ExceptionUtils;
 import com.startdis.comm.log.annotation.LogRecord;
 import com.startdis.comm.log.enums.BusinessType;
@@ -133,7 +132,7 @@ public class LogRecordAspect {
         Long executeTime = 0L;
         String errorInfo = "";
         //实现连接点方法的执行，以及成功失败的打点，出现异常的时候还会记录日志
-        Object returnValue;
+        Object returnValue = null;
         try {
             returnValue = joinPoint.proceed(args);
             ////记录方法的执行时间
@@ -162,7 +161,7 @@ public class LogRecordAspect {
             }
             //logger.error("LogRecord logAround Exception By Method：" + classname + "." + methodName);
             throwable.printStackTrace();
-            throw new BusinessException(((BusinessException) throwable).getCode(), ((BusinessException) throwable).getMessage());
+            //throw new BusinessException(((BusinessException) throwable).getCode(), ((BusinessException) throwable).getMessage());
         }
         //实现了返回值的日志输出
         if (logRecord.logReturn()) {
