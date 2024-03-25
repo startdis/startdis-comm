@@ -13,6 +13,7 @@ import com.startdis.comm.web.auth.AuthHandler;
 import com.startdis.comm.web.auth.AuthHandlerFactory;
 import com.startdis.comm.web.excel.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +67,9 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String serviceType = request.getHeader(HeaderConstant.X_SERVICE_TYPE);
         log.info("X_SERVICE_TYPE:{}", serviceType);
+        if (StringUtils.isEmpty(serviceType)){
+            serviceType = ServiceTypeEnum.WEB_SERVICE.getCode();
+        }
         AuthHandler authHandler = AuthHandlerFactory.getAuthHandler(ServiceTypeEnum.codeOf(serviceType));
         AuthInfo authInfo = authHandler.getAuthInfo(request, response);
         log.debug("当前请求路径:{},当前请求认证信息:{}", servletPath, JSON.toJSONString(authInfo));
